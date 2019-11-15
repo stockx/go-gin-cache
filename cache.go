@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/stockx/go-gin-cache/persistence"
 	"github.com/gin-gonic/gin"
+	"github.com/stockx/go-gin-cache/persistence"
 )
 
 const (
@@ -88,6 +88,7 @@ func (w *cachedWriter) Write(data []byte) (int, error) {
 		store := w.store
 		var cache responseCache
 		if err := store.Get(w.key, &cache); err == nil {
+			cache.Data = []byte{}
 			data = append(cache.Data, data...)
 		}
 
