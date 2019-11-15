@@ -7,9 +7,12 @@ import (
 	"github.com/go-redis/redis"
 )
 
+// RedisOptions allows the user to configure the client without importing the redis package
+type RedisOptions redis.Options
+
 type RedisConfig struct {
-	WriterOptions     *redis.Options
-	ReaderOptions     *redis.Options
+	WriterOptions     RedisOptions
+	ReaderOptions     RedisOptions
 	Password          string
 	DefaultExpiration time.Duration
 }
@@ -21,21 +24,28 @@ type RedisStore struct {
 	defaultExpiration time.Duration
 }
 
-var DefaultRedisOption = &redis.Options{
-	Addr:         ":6379",
-	DialTimeout:  10 * time.Second,
-	ReadTimeout:  30 * time.Second,
-	WriteTimeout: 30 * time.Second,
-	PoolSize:     10,
-	PoolTimeout:  30 * time.Second,
-	Password:     "",
-	DB:           0,
+// NewRedisOptions creates RedisOptions with defaults
+func NewRedisOptions() RedisOptions {
+	return RedisOptions{
+		Addr:         ":6379",
+		DialTimeout:  10 * time.Second,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 30 * time.Second,
+		PoolSize:     10,
+		PoolTimeout:  30 * time.Second,
+		Password:     "",
+		DB:           0,
+	}
 }
 
 // NewRedisCache returns a RedisStore
 func NewRedisCache(config *RedisConfig) *RedisStore {
-	writer := redis.NewClient(config.WriterOptions)
-	reader := redis.NewClient(config.ReaderOptions)
+	wo := redis.Options(config.WriterOptions)
+	writer := redis.NewClient(&wo)
+
+	ro := redis.Options(config.ReaderOptions)
+	reader := redis.NewClient(&ro)
+
 	return &RedisStore{writer, reader, config.DefaultExpiration}
 }
 
