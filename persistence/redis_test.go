@@ -4,6 +4,8 @@ import (
 	"net"
 	"testing"
 	"time"
+
+	"github.com/go-redis/redis"
 )
 
 // These tests require redis server running on localhost:6379 (the default)
@@ -14,7 +16,29 @@ var newRedisStore = func(t *testing.T, defaultExpiration time.Duration) CacheSto
 	if err == nil {
 		c.Write([]byte("flush_all\r\n"))
 		c.Close()
-		redisCache := NewRedisCache(redisTestServer, "", defaultExpiration)
+		redisCache := NewRedisCache(&RedisConfig{
+			ReaderOptions: &redis.Options{
+				Addr:         ":6379",
+				DialTimeout:  10 * time.Second,
+				ReadTimeout:  30 * time.Second,
+				WriteTimeout: 30 * time.Second,
+				PoolSize:     10,
+				PoolTimeout:  30 * time.Second,
+				Password:     "",
+				DB:           0,
+			},
+			WriterOptions: &redis.Options{
+				Addr:         ":6379",
+				DialTimeout:  10 * time.Second,
+				ReadTimeout:  30 * time.Second,
+				WriteTimeout: 30 * time.Second,
+				PoolSize:     10,
+				PoolTimeout:  30 * time.Second,
+				Password:     "",
+				DB:           0,
+			},
+			DefaultExpiration: 0 * time.Second,
+		})
 		redisCache.Flush()
 		return redisCache
 	}

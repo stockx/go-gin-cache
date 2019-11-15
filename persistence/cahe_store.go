@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	DEFAULT = time.Duration(0)
+	DEFAULT = time.Duration(1)
 	FOREVER = time.Duration(-1)
 )
 
