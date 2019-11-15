@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/coty91/cache/persistence"
+	"github.com/stockx/go-gin-cache/persistence"
 	"github.com/gin-gonic/gin"
 )
 

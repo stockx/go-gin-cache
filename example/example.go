@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/coty91/cache"
-	"github.com/coty91/cache/persistence"
+	"github.com/stockx/go-gin-cache"
+	"github.com/stockx/go-gin-cache/persistence"
 	"github.com/gin-gonic/gin"
 )
 

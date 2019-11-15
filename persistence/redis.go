@@ -3,7 +3,7 @@ package persistence
 import (
 	"time"
 
-	"github.com/coty91/cache/utils"
+	"github.com/stockx/go-gin-cache/utils"
 	"github.com/go-redis/redis"
 )
 

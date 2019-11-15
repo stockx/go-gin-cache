@@ -1,4 +1,4 @@
-module github.com/coty91/cache
+module github.com/stockx/go-gin-cache
 
 require (
 	github.com/bradfitz/gomemcache v0.0.0-20190329173943-551aad21a668

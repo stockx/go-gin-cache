@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/memcachier/mc"
-	"github.com/coty91/cache/utils"
+	"github.com/stockx/go-gin-cache/utils"
 )
 
 // MemcachedBinaryStore represents the cache with memcached persistence using
